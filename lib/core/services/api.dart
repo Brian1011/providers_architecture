@@ -12,15 +12,20 @@ class Api {
 
   var client = http.Client();
 
-  Future<User> getUserProfile(int userId) async {
+  Future<User?> getUserProfile(int? userId) async {
     // Get user profile for id
     var response = await client.get(
       Uri.parse('$endpoint/users/$userId'),
       headers: {'Content-Type': 'application/json'},
     );
 
-    // Convert and return
-    return User.fromJson(json.decode(response.body));
+    // handle any errors
+    if (response.statusCode != 200) {
+      return null;
+    } else {
+      // Convert and return
+      return User.fromJson(json.decode(response.body));
+    }
   }
 
   Future<List<Post>> getPostsForUser(int userId) async {
