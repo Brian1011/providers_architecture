@@ -1,18 +1,18 @@
-import 'package:providers_architecture/core/enums/view_state.dart';
 import 'package:providers_architecture/core/services/api.dart';
 import 'package:providers_architecture/core/viewmodels/base_model.dart';
 import 'package:providers_architecture/locator.dart';
 
-import '../models/post.dart';
+import '../enums/view_state.dart';
+import '../models/comment.dart';
 
-class HomeModel extends BaseModel {
+class CommentsModel extends BaseModel {
   final Api _api = locator<Api>();
 
-  List<Post> posts = [];
+  List<Comment> comments = [];
 
-  Future getPosts(int userId) async {
+  Future fetchComments(int postId) async {
     setState(ViewState.busy);
-    posts = await _api.getPostsForUser(userId);
+    comments = await _api.getCommentsForPost(postId);
     setState(ViewState.idle);
   }
 }

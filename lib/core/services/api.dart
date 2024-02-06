@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/comment.dart';
@@ -36,8 +35,6 @@ class Api {
       Uri.parse('$endpoint/posts?userId=$userId'),
       headers: {'Content-Type': 'application/json'},
     );
-
-    debugPrint('response: ${response.body}');
 
     // parse into List
     var parsed = json.decode(response.body) as List<dynamic>;
