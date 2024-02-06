@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:providers_architecture/core/viewmodels/login_model.dart';
 import 'package:providers_architecture/locator.dart';
 
+import '../../core/enums/view_state.dart';
 import '../widgets/login_header.dart';
 
 class LoginView extends StatefulWidget {
@@ -27,7 +28,7 @@ class _LoginViewState extends State<LoginView> {
             children: [
               LoginHeader(
                 controller: controller,
-                validationMessage: "",
+                validationMessage: model.errorMessage,
               ),
               const SizedBox(height: 50),
               model.state == ViewState.busy
@@ -37,7 +38,9 @@ class _LoginViewState extends State<LoginView> {
                       onPressed: () async {
                         var loginSuccess = await model.login(controller.text);
                         if (loginSuccess) {
-                          // Navigator.pushNamed(context, '/');
+                          if (context.mounted) {
+                            Navigator.pushNamed(context, '/');
+                          }
                         }
                       },
                     ),
